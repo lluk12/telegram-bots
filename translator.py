@@ -22,10 +22,10 @@ TOKEN_YANDEX = 'HERE YOU SHOULD ADD YOUR TOKEN'
 def getTranslation(text):
 	from_language = 'es' # Modify this to change the input language (es, en, ru,...)
 	to_language = 'en' # Modify this to change the output language
-	url = 'https://translate.yandex.net/api/v1.5/tr.json/translate?key='
-	url += TOKEN_YANDEX
-	url = url + '&text=' + str(text)
-	url = url + '&lang=' + from_language + '-' + to_language
+	languages = from_language + '-' + to_language
+	url = 'https://translate.yandex.net/api/v1.5/tr.json/translate?'
+	params = { 'key' : TOKEN_YANDEX, 'text' : str(text), 'lang' : languages }
+	url += urllib.urlencode(params)
 	content = urllib2.urlopen(url).read()
 	object_json = json.loads(content)
 	return object_json['text']
