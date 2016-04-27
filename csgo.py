@@ -3,7 +3,7 @@ import urllib, urllib2
 import time
 import json
 
-KEY = 'HERE YOUR KEY'
+KEY = ''
 bot = telebot.TeleBot(KEY)
 
 global items
@@ -16,7 +16,6 @@ def getItemList():
 	global images
 	lines = [line.rstrip('\n') for line in open('weapons.txt')]
 	for line in lines:
-		print line
 		items.append(line.split(',')[0])
 		images.append(line.split(',')[1])
 
@@ -29,13 +28,11 @@ def getObjects(query):
 	i = 0
 	item_counter = 0
 	for value in items:
-		if query_len > len(value) or stop == True or i > 10:
+		if query_len > len(value) or stop == True or i > 20:
 			break
 		if query.lower() == value[:query_len].lower():
 			if images[item_counter] != 'nope':
-				print "Entra"
 				thumb_url = 'http://steamcommunity-a.akamaihd.net/economy/image/' + images[item_counter] + '/62fx62f'
-				print thumb_url
 				items_found.append(telebot.types.InlineQueryResultArticle(str(i), value, telebot.types.InputTextMessageContent('/get ' + value), thumb_url=thumb_url, thumb_width=62, thumb_height=62))
 
 			else:
@@ -86,6 +83,14 @@ def getCommand(message):
 	else:
 		print "Hash name not in items"
 		bot.send_message(message.chat.id, "Couldn't find the item, maybe not supported. It's preferrable to use inline mode")
+
+@bot.message_handler(commands=['help'])
+def helpCommand(message):
+	try:
+		bot.send_message(message.chat.id, "Mention @CSGOPriceBot and start typing an skin name!")
+	except:
+		print "ERROR sending help msg"
+		return 1
 
 
 # This function is executed when someone types text
