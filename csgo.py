@@ -3,6 +3,10 @@ import urllib, urllib2
 import time
 import json
 
+# To avoid warnings in Python < 2.7.9. Not important!
+import requests
+requests.packages.urllib3.disable_warnings()
+
 KEY = ''
 bot = telebot.TeleBot(KEY)
 
