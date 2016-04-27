@@ -3,7 +3,7 @@ import urllib, urllib2
 import time
 import json
 
-KEY = '172507794:AAHF3PwzoG_YidIrP0yX9GL_pKLHBrhpX1c'
+KEY = 'HERE YOUR KEY'
 bot = telebot.TeleBot(KEY)
 
 global items
